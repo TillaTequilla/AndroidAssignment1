@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Task1</string>
+    <string name="person_name">Інна Держко</string>
+    <string name="career">Graphic designer</string>
+    <string name="home_address">Б. Хмельницького 44</string>
+    <string name="contacts">Контакти</string>
+    <string name="edit">Змінити профіль</string>
+    <string name="login_greetings">Давайте познайомимось</string>
+    <string name="login_greetings_2">Заповніть данні та переходіть до додатку</string>
+    <string name="profile_settings">Налаштування</string>
+    <string name="fill_out_go_settings">Зайдіть в налаштування і заповніть профіль</string>
+    <string name="email_hint">Електронна скриня</string>
+    <string name="password_hint">Пароль</string>
+    <string name="remember_me">Запам\'ятати мене</string>
+    <string name="google">Google</string>
+    <string name="or">або</string>
+    <string name="register">Реєстрація</string>
+    <string name="by_clicking_register_you_agree_to_our_terms_n_and_conditions">Натиснувши «Реєстрація», ви погоджуєтеся з нашими Умовами</string>
+    <string name="don_t_have_account">Немає облікового запису?</string>
+    <string name="sign_up">Увійти</string>
+    <string name="error_password_few_symbols">Мін 5 символів</string>
+    <string name="error_password_number">Хоча б 1 цифра</string>
+    <string name="error_email_valid_email">Введіть коректну е-скриньку</string>
+</resources>
