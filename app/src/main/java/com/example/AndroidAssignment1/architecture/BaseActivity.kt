@@ -1,10 +1,11 @@
-package com.example.androidAssignment2.architecture
+package com.example.AndroidAssignment1.architecture // pay attention
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 
+// nice one
 abstract class BaseActivity<B : ViewBinding>(val bindingFactory: (LayoutInflater) -> B) :
     AppCompatActivity() {
     private var _binding: B? = null

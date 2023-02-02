@@ -1,19 +1,21 @@
-package com.example.AndroidAssignment1
+package com.example.AndroidAssignment1.ui
 
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.core.widget.doOnTextChanged
-import com.example.AndroidAssignment1.constance.Constance
+import com.example.AndroidAssignment1.R
+import com.example.AndroidAssignment1.util.Constants
 import com.example.AndroidAssignment1.databinding.ActivityAuthBinding
 import com.example.AndroidAssignment1.util.NameParser
-import com.example.androidAssignment2.architecture.BaseActivity
+import com.example.AndroidAssignment1.architecture.BaseActivity
 
 class AuthActivity : BaseActivity<ActivityAuthBinding>(ActivityAuthBinding::inflate) {
+    // could be lazy init here
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        sharedPreferences = getSharedPreferences(Constance.SHAREDPREFERENCES_NAME, MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE)
         super.onCreate(savedInstanceState)
         getPreferencesData()
         listenerInitialization()
@@ -21,7 +23,8 @@ class AuthActivity : BaseActivity<ActivityAuthBinding>(ActivityAuthBinding::infl
 
     private fun listenerInitialization() {
         with(binding) {
-            tietPassword.doOnTextChanged { text, start, before, count ->
+            // do after text changed
+            etPassword.doOnTextChanged { text, start, before, count ->
                 if (text!!.length < 5) {
                     tilPassword.error = getString(R.string.error_password_few_symbols)
                 } else if (!text.contains("[0-9]".toRegex())) {
@@ -30,13 +33,14 @@ class AuthActivity : BaseActivity<ActivityAuthBinding>(ActivityAuthBinding::infl
             }
 
             tietEmail.doOnTextChanged { text, start, before, count ->
-                if (!text!!.contains(".+\\..+@+[A-Za-z]+\\.[A-Za-z]+".toRegex())
-                    || text.contains(" ")
+                if (!text!!.contains(".+\\..+@+[A-Za-z]+\\.[A-Za-z]+".toRegex()) // move regex to external file or function
+                    || text.contains(" ") // you can probably combine space validation in the same regexp
                 ) {
                     tilEmail.error = getString(R.string.error_email_valid_email)
                 } else tilEmail.error = null
             }
 
+            // at least btn, though I dislike either
             bRegister.setOnClickListener {
                 if (cbRememberMe.isChecked) {
                     rememberInformation()
@@ -45,7 +49,7 @@ class AuthActivity : BaseActivity<ActivityAuthBinding>(ActivityAuthBinding::infl
                 if (checkForInput()) {
                     val name: String = getName()
                     val intent = Intent(this@AuthActivity, MainActivity::class.java)
-                    intent.putExtra(Constance.INTENT_NAME, name)
+                    intent.putExtra(Constants.INTENT_NAME, name)
                     startActivity(intent)
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                     finish()
@@ -57,21 +61,22 @@ class AuthActivity : BaseActivity<ActivityAuthBinding>(ActivityAuthBinding::infl
     private fun checkForInput(): Boolean {
         with(binding) {
             return tilEmail.error == null && tilPassword.error == null
-                    && tietEmail.text!!.isNotEmpty() && tietPassword.text!!.isNotEmpty()
+                    && tietEmail.text!!.isNotEmpty() && etPassword.text!!.isNotEmpty()
         }
     }
 
     private fun getPreferencesData() {
-        if (sharedPreferences.getBoolean(Constance.SHAREDPREFERENCES_REMEMBER, false)) {
+        if (sharedPreferences.getBoolean(Constants.SHARED_PREFERENCES_REMEMBER, false)) {
+            // scope function would be nice here
             binding.tietEmail.setText(
                 sharedPreferences.getString(
-                    Constance.SHAREDPREFERENCES_EMAIL,
+                    Constants.SHAREDPREFERENCES_EMAIL,
                     null
                 )
             )
-            binding.tietPassword.setText(
+            binding.etPassword.setText(
                 sharedPreferences.getString(
-                    Constance.SHAREDPREFERENCES_PASSWORD,
+                    Constants.SHAREDPREFERENCES_PASSWORD,
                     null
                 )
             )
@@ -80,17 +85,16 @@ class AuthActivity : BaseActivity<ActivityAuthBinding>(ActivityAuthBinding::infl
     }
 
     private fun rememberInformation() {
+        // use Preferences helper
         val checked = binding.cbRememberMe.isChecked
         val editor = sharedPreferences.edit()
-        editor.putString(Constance.SHAREDPREFERENCES_EMAIL, binding.tietEmail.text.toString())
-        editor.putString(Constance.SHAREDPREFERENCES_PASSWORD, binding.tietPassword.text.toString())
-        editor.putBoolean(Constance.SHAREDPREFERENCES_REMEMBER, checked)
+        editor.putString(Constants.SHAREDPREFERENCES_EMAIL, binding.tietEmail.text.toString())
+        editor.putString(Constants.SHAREDPREFERENCES_PASSWORD, binding.etPassword.text.toString())
+        editor.putBoolean(Constants.SHARED_PREFERENCES_REMEMBER, checked)
         editor.apply()
     }
 
     private fun getName(): String {
         return NameParser.getName(binding.tietEmail.text.toString())
     }
-
-
 }

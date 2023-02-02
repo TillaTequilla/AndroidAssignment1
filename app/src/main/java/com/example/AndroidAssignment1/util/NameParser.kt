@@ -1,16 +1,18 @@
 package com.example.AndroidAssignment1.util
 
+// if we have util class that works with String, why not move regexp validation here
+// can be object if only contains static methods
 class NameParser {
     companion object {
         fun getName(email: String): String {
-            val email = email
             val indexOfPoint = email.indexOf('.')
-            val indexOfSign = email.indexOf('@')
-            var name = email.substring(0, indexOfPoint).lowercase()
-            name = name.replaceFirstChar { it.uppercaseChar() }
-            var thurname = email.substring(indexOfPoint + 1, indexOfSign)
-            thurname = thurname.replaceFirstChar { it.uppercaseChar() }
-            return "$name $thurname"
+            val indexOfAtSign = email.indexOf('@')
+            val name = email.substring(0, indexOfPoint).lowercase().apply {
+                replaceFirstChar { it.uppercaseChar() } // no need to reassign the value, same for line 13
+            }
+            val surname = email.substring(indexOfPoint + 1, indexOfAtSign).replaceFirstChar { it.uppercaseChar() }
+
+            return "$name $surname"
         }
     }
 }

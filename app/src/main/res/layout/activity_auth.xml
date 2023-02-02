@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/profile_background"
     android:padding="@dimen/authActivity_layoutPadding"
-    tools:context=".AuthActivity">
+    tools:context=".ui.AuthActivity">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvGreetingTop"
@@ -40,7 +40,6 @@
         android:id="@+id/tilEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:hint="@string/email_hint"
         android:theme="@style/ThemeOverlay.App.TextInputLayout"
         app:errorEnabled="true"
@@ -67,19 +66,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/authActivity_password_marginTop"
-
         android:hint="@string/password_hint"
         android:theme="@style/ThemeOverlay.App.TextInputLayout"
         app:errorEnabled="true"
         app:expandedHintEnabled="false"
         app:hintTextAppearance="@style/TextLabel"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tilEmail">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tietPassword"
+            android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@android:color/transparent"
