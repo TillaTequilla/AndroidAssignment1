@@ -87,11 +87,12 @@ class AuthActivity : BaseActivity<ActivityAuthBinding>(ActivityAuthBinding::infl
     private fun rememberInformation() {
         // use Preferences helper
         val checked = binding.cbRememberMe.isChecked
-        val editor = sharedPreferences.edit()
-        editor.putString(Constants.SHAREDPREFERENCES_EMAIL, binding.tietEmail.text.toString())
-        editor.putString(Constants.SHAREDPREFERENCES_PASSWORD, binding.etPassword.text.toString())
-        editor.putBoolean(Constants.SHARED_PREFERENCES_REMEMBER, checked)
-        editor.apply()
+        sharedPreferences.edit().apply {
+            putString(Constants.SHAREDPREFERENCES_EMAIL, binding.tietEmail.text.toString())
+            putString(Constants.SHAREDPREFERENCES_PASSWORD, binding.etPassword.text.toString())
+            putBoolean(Constants.SHARED_PREFERENCES_REMEMBER, checked)
+            apply()
+        }
     }
 
     private fun getName(): String {
